@@ -158,10 +158,10 @@ menuBtn.addEventListener('click', function() {
     if (list.className.includes('no-display')) {
         list.classList.remove('no-display');
         list.classList += 'show';
-        menuBtn.children[0].className = 'fas fa-chevron-up'
+        menuBtn.children[0].className = 'fas fa-chevron-down'
     } else {
         list.classList.remove('show');
         list.classList += 'no-display';
-        menuBtn.children[0].className = 'fas fa-chevron-down'
+        menuBtn.children[0].className = 'fas fa-chevron-up'
     }
 })
