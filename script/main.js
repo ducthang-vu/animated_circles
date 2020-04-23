@@ -152,6 +152,8 @@ menu.addEventListener('mousedown', function(e) {
     })
 })
 
+
+// Activating menu button
 menuBtn.addEventListener('click', function() {
     if (list.className.includes('no-display')) {
         list.classList.remove('no-display');
