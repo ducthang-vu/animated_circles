@@ -75,7 +75,7 @@ class Animation {
         document.addEventListener('mouseleave', () => {this.mouse = [undefined, undefined]});
     }
 
-    activateGravity() {
+    activateAttraction() {
         document.addEventListener('click', () => this.attraction = !this.attraction);
     }
 
@@ -108,7 +108,7 @@ class Animation {
     start() {
         window.onresize = resizeCanvas;
         this.activateMouseMove();
-        this.activateGravity();
+        this.activateAttraction();
         this.animate();
     }
 }
