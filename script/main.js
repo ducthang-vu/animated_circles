@@ -1,43 +1,39 @@
 console.log('js.main is working.');
 
+
+/* GLOBAL VARIABLE */
 const canvas = document.getElementById('canvas');
 const c = canvas.getContext('2d');
 
-const number_circles = 200
-const radius = 30;
-const max_speed = 5;
-const mouseRadius = 75;
+const menuBtn = document.getElementById('menu-btn')
+const list = document.getElementById('menu-list')
 
-var circles = [];    //will contain 100 circles
-var mouse = [];
-
-
-/* Fix canvas dimensions */
+/* FIX CANVAS */
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
 
 resizeCanvas();
-window.onresize = resizeCanvas;
 
 
+/* CLASSES */
 class Circle {
-    constructor(radius) {
+    constructor(radius, max_speed) {
         this.x = Math.random() * (canvas.width - 2 * radius) + radius;
         this.y = Math.random() * (canvas.height - 2 * radius) + radius;
         this.radius = radius;
         this.velocity = [(Math.random() - 0.5) * max_speed, (Math.random() - 0.5) * max_speed];
-
+        this.colour = ['#801662','#9C8922', '#911ADB', '#25D604', '#1F0FD1'][Math.random() * 5 | 0];
         this.print();
     }
 
     move() {
-        if (this.x + this.velocity[0] > canvas.width - radius || this.x + this.velocity[0] < radius) {
+        if (this.x + this.velocity[0] > canvas.width - this.radius || this.x + this.velocity[0] < this.radius) {
             this.velocity[0] *= -1;
         }
 
-        if (this.y + this.velocity[1] > canvas.height - radius || this.y + this.velocity[1] < radius) {
+        if (this.y + this.velocity[1] > canvas.height - this.radius || this.y + this.velocity[1] < this.radius) {
             this.velocity[1] *= -1;
         }
         
@@ -50,37 +46,134 @@ class Circle {
         c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         c.strokeStyle = 'white'
         c.stroke();
-        c.fillStyle = ['red', 'yellow', 'orange'][Math.random() * 3 | 0];
+        c.fillStyle = this.colour
         c.fill();
     }
 }
 
 
-function animate() {
-    requestAnimationFrame(animate);
+class Animation {
+    constructor(number, radius, max_speed, mouse_radius) {
+        self = this;
+        this.number_circles = number;
+        this.radius = radius;
+        this.max_speed = max_speed;
+        this.mouseRadius = mouse_radius;
+        this.attraction = false
 
-    c.clearRect(0, 0, canvas.width, canvas.height);
+        this.circles = [];   
+        this.mouse = [];
 
-    for (circle of circles) {
-        if (circle.x < mouse[0] + mouseRadius && circle.x > mouse[0] - mouseRadius &&
-            circle.y < mouse[1] + mouseRadius && circle.y > mouse[1] - mouseRadius) {
-            if (circle.radius < mouseRadius) circle.radius++
-        } else {
-            if (circle.radius > radius) circle.radius--
+        for (let i = 0; i < this.number_circles; i++) {
+            this.circles.push(new Circle(this.radius, this.max_speed));
         }
+    }
 
-        circle.move();
-        circle.print();
+    activateMouseMove() {
+        document.addEventListener('mousemove', function(e) {self.mouse = [e.clientX, e.clientY]});
+        document.addEventListener('mouseleave', () => {this.mouse = [undefined, undefined]});
+    }
+
+    activateGravity() {
+        document.addEventListener('click', () => this.attraction = !this.attraction);
+    }
+
+    animate() {
+        requestAnimationFrame(this.animate.bind(this));
+
+        c.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let circle of this.circles) {
+            if (circle.x < this.mouse[0] + this.mouseRadius && circle.x > this.mouse[0] - this.mouseRadius &&
+                circle.y < this.mouse[1] + this.mouseRadius && circle.y > this.mouse[1] - this.mouseRadius) {
+                if (circle.radius < this.mouseRadius) circle.radius++;
+            } else {
+                if (circle.radius > this.radius) circle.radius--;
+            }
+            
+            if (this.attraction) {
+                if (circle.x > this.mouse[0]) circle.velocity[0] = -Math.abs(circle.velocity[0]);
+                else if (circle.x < this.mouse[0]) circle.velocity[0] = Math.abs(circle.velocity[0]);
+
+                if (circle.y > this.mouse[1]) circle.velocity[1] = -Math.abs(circle.velocity[1]);
+                else if (circle.y < this.mouse[1]) circle.velocity[1] = Math.abs(circle.velocity[1]);; 
+            }
+
+            circle.move();
+            circle.print();
+        }
+    }
+
+    start() {
+        window.onresize = resizeCanvas;
+        this.activateMouseMove();
+        this.activateGravity();
+        this.animate();
     }
 }
 
 
-
+/***************/
 /* MAIN SCRIPT */
+/***************/
+animation = new Animation(600, 10, 5, 100);
+animation.start();
 
-for (let i = 0; i < number_circles; i++) {
-    circles.push(new Circle(30));
+
+
+// Make menu draggable and show/hide list
+//Make the DIV element draggagle:
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById('menu')) {
+        /* if present, the header is where you move the DIV from:*/
+        document.getElementById('menu').onmousedown = dragMouseDown;
+    } else {
+        /* otherwise, move the DIV from anywhere inside the DIV:*/
+        elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
 }
 
-document.addEventListener('mousemove', function(e) {mouse = [e.clientX, e.clientY]})
-animate();
+dragElement(document.getElementById("menu"));
+
+menuBtn.addEventListener('click', function() {
+    if (list.className.includes('no-display')) {
+        list.classList.remove('no-display');
+        list.classList += 'show';
+        menuBtn.children[0].className = 'fas fa-chevron-up'
+    } else {
+        list.classList.remove('show');
+        list.classList += 'no-display';
+        menuBtn.children[0].className = 'fas fa-chevron-down'
+    }
+})

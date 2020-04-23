@@ -1,10 +1,67 @@
+/* GENERAL */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 90%;
+    overflow: hidden;
+}
+
+li {
+    margin: 10px;
+    list-style: none;
+}
+
+.no-display {
+    display: none;
+}
+
+
+/* APP */
 #canvas {
     display: block;
-    background: #000;
+    background: #00123B;
 }
+
+.menu {
+    position: absolute;
+    padding: 10px;
+    top: 30px;
+    right: 30px;
+    background: #B6D6F2;
+    width: 300px;
+    border-radius: 25px;
+    color: #594336;
+    cursor: move;
+}
+
+    .menu h1 {
+        text-align: center;
+    }
+
+    .menu h1 button {
+        padding: 5px;
+        background: inherit;
+        color: inherit;
+        border: 0;
+        outline: 0;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .signature {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-style: italic;
+    }
+
+        .fab.fa-github-square {
+            margin-left: 10px;
+            font-size: 160%;
+        }

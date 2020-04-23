@@ -4,10 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CanvasCircles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <canvas id="canvas"></canvas>
+
+    <section id="menu" class=menu>
+        <h1 id="menu-title">Intructions
+            <button id="menu-btn">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </h1>
+
+        <ul id="menu-list" class="no-display">
+            <li>
+                600 circles have been spawned and they are moving at a random yet constant speed.
+            </li>
+
+            <li>
+                Move the mouse inside the page: circles close to the cursor will grow.<br> 
+                They will revert to their original size once far from the cursor.
+            </li>
+
+            <li>
+                By clicking inside the page you will activate the <strong>attraction</strong> feature.<br>
+                Click again to disable it.
+            </li>
+
+            <li class="signature">
+                <span>Made by Thang</span>
+                <a href href=""><i class="fab fa-github-square"></i></a>
+            </li>
+        </ul>
+    </section>
+
     <script src="script/main.js"></script>
 </body>
 </html>
