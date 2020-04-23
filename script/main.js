@@ -5,6 +5,7 @@ console.log('js.main is working.');
 const canvas = document.getElementById('canvas');
 const c = canvas.getContext('2d');
 
+const menu = document.getElementById('menu');
 const menuBtn = document.getElementById('menu-btn')
 const list = document.getElementById('menu-list')
 
@@ -123,41 +124,33 @@ animation.start();
 
 // Make menu draggable and show/hide list
 //Make the element draggagle:
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById('menu')) {
-        document.getElementById('menu').onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
+
+menu.addEventListener('mousedown', function(e) {
+    let x = e.clientX;
+    let y = e.clientY;
+
+    function moving(e) {
+        let newX = x - e.clientX;
+        let newY = y - e.clientY;
+
+        let w = menu.getBoundingClientRect().left;
+        let z = menu.getBoundingClientRect().top;
+
+        menu.style.left = w - newX + "px";
+        menu.style.top = z - newY + "px";
+
+        x = e.clientX;
+        y = e.clientY;
     }
 
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
 
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
+    window.addEventListener('mousemove', moving);
 
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-
-dragElement(document.getElementById("menu"));
+    var mouseup = window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', moving);
+        window.removeEventListener('mouseup', mouseup);
+    })
+})
 
 menuBtn.addEventListener('click', function() {
     if (list.className.includes('no-display')) {
