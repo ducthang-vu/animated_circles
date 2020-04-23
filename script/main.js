@@ -6,8 +6,8 @@ const canvas = document.getElementById('canvas');
 const c = canvas.getContext('2d');
 
 const menu = document.getElementById('menu');
-const menuBtn = document.getElementById('menu-btn')
-const list = document.getElementById('menu-list')
+const menuBtn = document.getElementById('menu-btn');
+const list = document.getElementById('menu-list');
 
 /* FIX CANVAS */
 function resizeCanvas() {
@@ -158,10 +158,10 @@ menuBtn.addEventListener('click', function() {
     if (list.className.includes('no-display')) {
         list.classList.remove('no-display');
         list.classList += 'show';
-        menuBtn.children[0].className = 'fas fa-chevron-down'
+        menuBtn.children[0].className = 'fas fa-chevron-down';
     } else {
         list.classList.remove('show');
         list.classList += 'no-display';
-        menuBtn.children[0].className = 'fas fa-chevron-up'
+        menuBtn.children[0].className = 'fas fa-chevron-up';
     }
 })
