@@ -8,7 +8,7 @@ On page load, 600 circles will be spawned. They will be moving at a random yet c
 Move the mouse inside the page: circles close to the cursor will grow.
 They will revert to their original size once far from the cursor.
 
-By clicking inside the page you will activate the "attraction" feature.
+By double-clicking inside the page you will activate the "attraction" feature.
 Click again to disable it.
 
 
