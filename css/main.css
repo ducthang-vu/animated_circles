@@ -41,6 +41,7 @@ li {
 
     .menu h1 {
         text-align: center;
+        user-select: none;
     }
 
     .menu h1 button {
