@@ -76,7 +76,7 @@ class Animation {
     }
 
     activateAttraction() {
-        document.addEventListener('click', () => this.attraction = !this.attraction);
+        document.addEventListener('dblclick', () => this.attraction = !this.attraction);
     }
 
     animate() {
