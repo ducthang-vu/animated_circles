@@ -91,9 +91,7 @@ class Animation {
         if (circle.x < this.mouse[0] + this.mouseRadius && circle.x > this.mouse[0] - this.mouseRadius &&
             circle.y < this.mouse[1] + this.mouseRadius && circle.y > this.mouse[1] - this.mouseRadius) {
             if (circle.radius < this.mouseRadius) circle.radius++;
-        } else {
-            if (circle.radius > this.radius) circle.radius--;
-        }
+        } else if (circle.radius > this.radius) circle.radius--;
     }
     
     animate() {
