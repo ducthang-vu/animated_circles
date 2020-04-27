@@ -79,6 +79,14 @@ class Animation {
         document.addEventListener('dblclick', () => this.attraction = !this.attraction);
     }
 
+    applyAttraction(circle) {
+        if (circle.x > this.mouse[0]) circle.velocity[0] = -Math.abs(circle.velocity[0]);
+        else if (circle.x < this.mouse[0]) circle.velocity[0] = Math.abs(circle.velocity[0]);
+
+        if (circle.y > this.mouse[1]) circle.velocity[1] = -Math.abs(circle.velocity[1]);
+        else if (circle.y < this.mouse[1]) circle.velocity[1] = Math.abs(circle.velocity[1]);
+    }
+
     animate() {
         requestAnimationFrame(this.animate.bind(this));
 
@@ -92,13 +100,7 @@ class Animation {
                 if (circle.radius > this.radius) circle.radius--;
             }
             
-            if (this.attraction) {
-                if (circle.x > this.mouse[0]) circle.velocity[0] = -Math.abs(circle.velocity[0]);
-                else if (circle.x < this.mouse[0]) circle.velocity[0] = Math.abs(circle.velocity[0]);
-
-                if (circle.y > this.mouse[1]) circle.velocity[1] = -Math.abs(circle.velocity[1]);
-                else if (circle.y < this.mouse[1]) circle.velocity[1] = Math.abs(circle.velocity[1]);; 
-            }
+            if (this.attraction) this.applyAttraction(circle);
 
             circle.move();
             circle.print();
