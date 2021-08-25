@@ -1,6 +1,8 @@
 # ANIMATED CIRCLES
 ANIMATED CIRCLES is a simple and interactive canvas built with HTML, CSS, and (vanilla) JavaScript.
 
+Have a look on [codepen](https://codepen.io/ducthang-vu/pen/PoPebQb).
+
 
 ## FEATURES
 On page load, 600 circles will be spawned. They will be moving at a random yet constant speed.
