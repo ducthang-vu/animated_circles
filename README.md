@@ -1,7 +1,7 @@
 # ANIMATED CIRCLES
 ANIMATED CIRCLES is a simple and interactive canvas built with HTML, CSS, and (vanilla) JavaScript.
 
-Have a look on [codepen](https://codepen.io/ducthang-vu/pen/PoPebQb).
+Have a look on [codepen](https://codepen.io/ducthang-vu/pen/XWmpwBO).
 
 
 ## FEATURES
